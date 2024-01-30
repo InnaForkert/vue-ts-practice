@@ -1,28 +1,17 @@
-<script lang="ts">
-import { computed, defineComponent, PropType } from "vue";
+<script lang="ts" setup>
+import { computed } from "vue";
 import Job from "@/types/Job";
 import OrderTerm from "@/types/OrderTerm";
 
-export default defineComponent({
- props: {
-  jobs: {
-   required: true,
-   type: Array as PropType<Job[]>,
-  },
-  order: {
-   required: true,
-   type: String as PropType<OrderTerm>,
-  },
- },
- setup(props) {
-  const orderedJobs = computed(() => {
-   return [...props.jobs].sort((a: Job, b: Job) =>
-    a[props.order] > b[props.order] ? 1 : -1
-   );
-  });
+const props = defineProps<{
+ jobs: Job[];
+ order: OrderTerm;
+}>();
 
-  return { orderedJobs };
- },
+const orderedJobs = computed(() => {
+ return [...props.jobs].sort((a: Job, b: Job) =>
+  a[props.order] > b[props.order] ? 1 : -1
+ );
 });
 </script>
 
